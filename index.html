@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spine WebM Exporter</title>
+    
+    <!-- Spine Player Assets -->
+    <script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/iife/spine-player.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/spine-player.css">
+    
+	<link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+    <!-- Main Menu Overlay -->
+    <div id="menu-overlay">
+        <div class="menu-card">
+            <h2> Spine Model Loader</h2>
+
+            <div class="file-input-group">
+                <label for="json-file">1. Select Spine JSON File (.json):</label>
+                <input type="file" id="json-file" accept=".json">
+            </div>
+
+            <div class="file-input-group">
+                <label for="atlas-file">2. Select Atlas File (.atlas / .txt):</label>
+                <input type="file" id="atlas-file" accept=".atlas,.txt">
+            </div>
+
+            <div class="file-input-group">
+                <label for="image-files">3. Select PNG Texture Image(s) (.png):</label>
+                <input type="file" id="image-files" accept=".png" multiple>
+            </div>
+
+            <button class="btn-load" onclick="processAndLoadSpine()">▶ Load Model</button>
+        </div>
+    </div>
+
+    <!-- Control Box -->
+    <div id="control-box">
+        <div class="drag-header" id="drag-header">
+            ⚙️ Setting <span>Press 'H' to Hide</span>
+        </div>
+
+        <!-- Background Color Picker -->
+        <div class="control-group">
+            <label for="bg-color">Background Color:</label>
+            <div class="row-group">
+                <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
+                <button class="btn-reset" onclick="resetBgColor()">Reset (Transparent)</button>
+            </div>
+        </div>
+
+        <!-- Bitrate Setting -->
+        <div class="control-group">
+            <label for="bitrate-input">Target Bitrate (Mbps):</label>
+            <div class="row-group">
+                <input type="number" id="bitrate-input" value="40" min="1" max="200" step="1">
+                <button class="btn-reset" onclick="resetBitrate()">Reset (40M)</button>
+            </div>
+        </div>
+
+        <!-- Toggle Record Button & Status -->
+        <button id="rec-btn" class="rec-btn" onclick="toggleRecording()">🔴 Start Recording</button>
+        <div id="status-text" class="status-text">Ready</div>
+
+        <!-- Animation Details -->
+        <div id="anim-details" class="anim-details">
+            Waiting for animation payload...
+        </div>
+
+        <button class="btn-reset" style="width:100%; margin-top:10px;" onclick="openMainMenu()">📁 Load New Model</button>
+    </div>
+
+    <!-- Spine Player Container -->
+    <div id="player-container"></div>
+	
+	<script src="script.js"></script>
+	
+</body>
+</html>
