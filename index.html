@@ -9,16 +9,15 @@
     <script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/iife/spine-player.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/spine-player.css">
     
-	<link rel="stylesheet" href="style.css">
-	<link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/217698445186695170/fb81d2ae7710794c2bd52afdabfa5017.png">
-    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/217698445186695170/fb81d2ae7710794c2bd52afdabfa5017.png">
 </head>
 <body>
 
-    <!-- Main Menu Overlay -->
-    <div id="menu-overlay">
+    <!-- PAGE 1: LOADER PAGE (Tempat utk decorate nanti) -->
+    <div id="view-loader" class="page-view active">
         <div class="menu-card">
-            <h2> Spine Model Loader</h2>
+            <h2>Spine Model Loader</h2>
 
             <div class="file-input-group">
                 <label for="json-file">1. Select Spine JSON File (.json):</label>
@@ -39,64 +38,65 @@
         </div>
     </div>
 
-    <!-- Control Box -->
-    <div id="control-box">
-        <div class="drag-header" id="drag-header">
-            ⚙️ Setting <span>Press 'H' to Hide</span>
-        </div>
-
-        <!-- Background Color Picker -->
-        <div class="control-group">
-            <label for="bg-color">Background Color:</label>
-            <div class="row-group">
-                <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
-                <button class="btn-reset" onclick="resetBgColor()">Reset (Transparent)</button>
+    <!-- PAGE 2: STUDIO / PLAYER PAGE -->
+    <div id="view-studio" class="page-view">
+        
+        <!-- Draggable Control Box -->
+        <div id="control-box">
+            <div class="drag-header" id="drag-header">
+                ⚙️ Setting <span>Press 'H' to Hide</span>
             </div>
-        </div>
 
-        <!-- Bitrate Setting -->
-        <div class="control-group">
-            <label for="bitrate-input">Target Bitrate (Mbps):</label>
-            <div class="row-group">
-                <input type="number" id="bitrate-input" value="40" min="1" max="200" step="1">
-                <button class="btn-reset" onclick="resetBitrate()">Reset (40M)</button>
+            <!-- Background Color Picker -->
+            <div class="control-group">
+                <label for="bg-color">Background Color:</label>
+                <div class="row-group">
+                    <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
+                    <button class="btn-reset" onclick="resetBgColor()">Reset (Transparent)</button>
+                </div>
             </div>
+
+            <!-- Bitrate Setting -->
+            <div class="control-group">
+                <label for="bitrate-input">Target Bitrate (Mbps):</label>
+                <div class="row-group">
+                    <input type="number" id="bitrate-input" value="40" min="1" max="200" step="1">
+                    <button class="btn-reset" onclick="resetBitrate()">Reset (40M)</button>
+                </div>
+            </div>
+
+            <!-- Native Resolution Toggle -->
+            <div class="control-group">
+                <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="native-res-checkbox" style="width:auto; padding:0;">
+                    <span>Record at Native Res (<span id="native-res-label">-</span>)</span>
+                </label>
+            </div>
+
+            <!-- Native Duration Toggle -->
+            <div class="control-group">
+                <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="native-duration-checkbox" style="width:auto; padding:0;" checked>
+                    <span>Record at Native Duration</span>
+                </label>
+            </div>
+
+            <!-- Toggle Record Button & Status -->
+            <button id="rec-btn" class="rec-btn" onclick="toggleRecording()">🔴 Start Recording</button>
+            <div id="status-text" class="status-text">Ready</div>
+
+            <!-- Animation Details -->
+            <div id="anim-details" class="anim-details">
+                Waiting for animation payload...
+            </div>
+
+            <button class="btn-reset" style="width:100%; margin-top:10px;" onclick="openMainMenu()">📁 Load New Model</button>
         </div>
 
-        <!-- Native Resolution Toggle -->
-        <div class="control-group">
-            <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
-                <input type="checkbox" id="native-res-checkbox" style="width:auto; padding:0;">
-                <span>Record at Native Res (<span id="native-res-label">-</span>)</span>
-				<!-- <span>Record at Native Resolution</span> -->
-            </label>
-        </div>
-
-        <!-- Native Duration Toggle -->
-        <div class="control-group">
-            <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
-                <input type="checkbox" id="native-duration-checkbox" style="width:auto; padding:0;" checked>
-                <!-- <span>Record at Native Dur (<span id="native-duration-label">-</span>)</span> -->
-				<span>Record at Native Duration</span>
-            </label>
-        </div>
-
-        <!-- Toggle Record Button & Status -->
-        <button id="rec-btn" class="rec-btn" onclick="toggleRecording()">🔴 Start Recording</button>
-        <div id="status-text" class="status-text">Ready</div>
-
-        <!-- Animation Details -->
-        <div id="anim-details" class="anim-details">
-            Waiting for animation payload...
-        </div>
-
-        <button class="btn-reset" style="width:100%; margin-top:10px;" onclick="openMainMenu()">📁 Load New Model</button>
+        <!-- Spine Player Canvas Container -->
+        <div id="player-container"></div>
     </div>
 
-    <!-- Spine Player Container -->
-    <div id="player-container"></div>
-	
-	<script src="script.js"></script>
-	
+    <script src="script.js"></script>
 </body>
 </html>
