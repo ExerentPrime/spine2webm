@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spine WebM Exporter</title>
     
-    <!-- Spine Player Assets -->
     <script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/iife/spine-player.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/spine-player.css">
+
+    <script src="https://unpkg.com/webm-muxer@5.1.2/build/webm-muxer.js"></script>
     
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/217698445186695170/fb81d2ae7710794c2bd52afdabfa5017.png">
 </head>
 <body>
 
-    <!-- PAGE 1: LOADER PAGE (Tempat utk decorate nanti) -->
+    <!-- PAGE 1: LOADER PAGE -->
     <div id="view-loader" class="page-view active">
         <div class="menu-card">
             <h2>Spine Model Loader</h2>
@@ -77,7 +78,7 @@
             <div class="control-group">
                 <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
                     <input type="checkbox" id="native-duration-checkbox" style="width:auto; padding:0;" checked>
-                    <span>Record at Native Duration</span>
+                    <span>Record at Native Duration (Offline Export)</span>
                 </label>
             </div>
 
