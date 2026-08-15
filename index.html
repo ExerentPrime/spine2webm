@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spine WebM Exporter</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/iife/spine-player.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/spine-player.css">
 
@@ -16,35 +20,186 @@
     <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/217698445186695170/fb81d2ae7710794c2bd52afdabfa5017.png">
 </head>
 <body>
-	
+
     <!-- PAGE 1: LOADER PAGE -->
     <div id="view-loader" class="page-view active">
-		
-		<div class="bokeh-bg">
-			<div class="blob purple"></div>
-			<div class="blob blue"></div>
-			<div class="blob purple"></div>
-			<div class="blob blue"></div>
-			<div class="blob cyan"></div>
-		</div>
-		
+
+        <!-- Signature: animated bone-rig chains (Spine's own bone visual
+             vocabulary — kite-shaped bones + joints), parented in nested
+             SVG groups so rotating a root segment cascades to its children,
+             mimicking real skeletal forward-kinematics sway.
+
+             Setiap chain ialah SVG KECIL berasingan, di-pin terus ke
+             penjuru/tepi SEBENAR viewport guna CSS position:fixed
+             (top/left/right/bottom) — jadi ia automatik ikut penjuru
+             sebenar tak kira nisbah skrin (16:9, 21:9, 9:16, dll), tiada
+             isu crop/slice/meet dari satu kanvas kongsi. -->
+        <svg class="rig-corner rig-corner--tl" viewBox="0 0 300 300" aria-hidden="true">
+            <defs><linearGradient id="boneGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#22d3ee"/>
+            </linearGradient></defs>
+            <g transform="translate(10,10)">
+                <g class="rig-anim rig-anim--sway-a" style="--base-rot:38deg; --dur:9s;">
+                    <polygon class="rig-bone" points="0,-10 22,-3 105,0 22,3 0,10"/>
+                    <circle class="rig-joint" cx="0" cy="0" r="6"/>
+                    <g transform="translate(105,0)">
+                        <g class="rig-anim rig-anim--sway-b" style="--base-rot:-18deg; --dur:6s;">
+                            <polygon class="rig-bone" points="0,-8 17,-2 80,0 17,2 0,8"/>
+                            <circle class="rig-joint" cx="0" cy="0" r="5"/>
+                            <g transform="translate(80,0)">
+                                <g class="rig-anim rig-anim--sway-a" style="--base-rot:22deg; --dur:4s;">
+                                    <polygon class="rig-bone" points="0,-5 12,-2 55,0 12,2 0,5"/>
+                                    <circle class="rig-joint" cx="0" cy="0" r="4"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <svg class="rig-corner rig-corner--tr" viewBox="0 0 300 300" aria-hidden="true">
+            <g transform="translate(290,10)">
+                <g class="rig-anim rig-anim--sway-b" style="--base-rot:142deg; --dur:10s;">
+                    <polygon class="rig-bone" points="0,-10 22,-3 105,0 22,3 0,10"/>
+                    <circle class="rig-joint" cx="0" cy="0" r="6"/>
+                    <g transform="translate(105,0)">
+                        <g class="rig-anim rig-anim--sway-a" style="--base-rot:20deg; --dur:6.5s;">
+                            <polygon class="rig-bone" points="0,-8 17,-2 80,0 17,2 0,8"/>
+                            <circle class="rig-joint" cx="0" cy="0" r="5"/>
+                            <g transform="translate(80,0)">
+                                <g class="rig-anim rig-anim--sway-b" style="--base-rot:-24deg; --dur:4.5s;">
+                                    <polygon class="rig-bone" points="0,-5 12,-2 55,0 12,2 0,5"/>
+                                    <circle class="rig-joint" cx="0" cy="0" r="4"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <svg class="rig-corner rig-corner--bl" viewBox="0 0 300 300" aria-hidden="true">
+            <g transform="translate(10,290)">
+                <g class="rig-anim rig-anim--sway-b" style="--base-rot:-38deg; --dur:8.5s;">
+                    <polygon class="rig-bone" points="0,-10 22,-3 105,0 22,3 0,10"/>
+                    <circle class="rig-joint" cx="0" cy="0" r="6"/>
+                    <g transform="translate(105,0)">
+                        <g class="rig-anim rig-anim--sway-a" style="--base-rot:16deg; --dur:5.5s;">
+                            <polygon class="rig-bone" points="0,-8 17,-2 80,0 17,2 0,8"/>
+                            <circle class="rig-joint" cx="0" cy="0" r="5"/>
+                            <g transform="translate(80,0)">
+                                <g class="rig-anim rig-anim--sway-b" style="--base-rot:-20deg; --dur:4s;">
+                                    <polygon class="rig-bone" points="0,-5 12,-2 55,0 12,2 0,5"/>
+                                    <circle class="rig-joint" cx="0" cy="0" r="4"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <svg class="rig-corner rig-corner--br" viewBox="0 0 300 300" aria-hidden="true">
+            <g transform="translate(290,290)">
+                <g class="rig-anim rig-anim--sway-a" style="--base-rot:218deg; --dur:11s;">
+                    <polygon class="rig-bone" points="0,-10 22,-3 105,0 22,3 0,10"/>
+                    <circle class="rig-joint" cx="0" cy="0" r="6"/>
+                    <g transform="translate(105,0)">
+                        <g class="rig-anim rig-anim--sway-b" style="--base-rot:-22deg; --dur:6s;">
+                            <polygon class="rig-bone" points="0,-8 17,-2 80,0 17,2 0,8"/>
+                            <circle class="rig-joint" cx="0" cy="0" r="5"/>
+                            <g transform="translate(80,0)">
+                                <g class="rig-anim rig-anim--sway-a" style="--base-rot:18deg; --dur:4.2s;">
+                                    <polygon class="rig-bone" points="0,-5 12,-2 55,0 12,2 0,5"/>
+                                    <circle class="rig-joint" cx="0" cy="0" r="4"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <svg class="rig-corner rig-corner--ml" viewBox="0 0 220 140" aria-hidden="true">
+            <g transform="translate(6,70)">
+                <g class="rig-anim rig-anim--sway-a" style="--base-rot:5deg; --dur:7s; --amp:8deg;">
+                    <polygon class="rig-bone rig-bone--faint" points="0,-7 16,-2 78,0 16,2 0,7"/>
+                    <circle class="rig-joint rig-joint--faint" cx="0" cy="0" r="4"/>
+                    <g transform="translate(78,0)">
+                        <g class="rig-anim rig-anim--sway-b" style="--base-rot:14deg; --dur:5s; --amp:10deg;">
+                            <polygon class="rig-bone rig-bone--faint" points="0,-5 11,-2 54,0 11,2 0,5"/>
+                            <circle class="rig-joint rig-joint--faint" cx="0" cy="0" r="3"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <svg class="rig-corner rig-corner--mr" viewBox="0 0 220 140" aria-hidden="true">
+            <g transform="translate(214,70)">
+                <g class="rig-anim rig-anim--sway-b" style="--base-rot:175deg; --dur:7.5s; --amp:8deg;">
+                    <polygon class="rig-bone rig-bone--faint" points="0,-7 16,-2 78,0 16,2 0,7"/>
+                    <circle class="rig-joint rig-joint--faint" cx="0" cy="0" r="4"/>
+                    <g transform="translate(78,0)">
+                        <g class="rig-anim rig-anim--sway-a" style="--base-rot:-16deg; --dur:5.3s; --amp:10deg;">
+                            <polygon class="rig-bone rig-bone--faint" points="0,-5 11,-2 54,0 11,2 0,5"/>
+                            <circle class="rig-joint rig-joint--faint" cx="0" cy="0" r="3"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <!-- Titik joint berkelip merata skrin — div biasa + peratus posisi,
+             jadi automatik betul kedudukan pada NISBAH SKRIN APA PUN. -->
+        <div class="rig-twinkles" aria-hidden="true">
+            <span class="rig-twinkle-dot" style="top:22%; left:25%; --tw-delay:0s;"></span>
+            <span class="rig-twinkle-dot" style="top:26%; left:78%; --tw-delay:0.6s;"></span>
+            <span class="rig-twinkle-dot" style="top:62%; left:15%; --tw-delay:1.2s;"></span>
+            <span class="rig-twinkle-dot" style="top:60%; left:85%; --tw-delay:1.8s;"></span>
+            <span class="rig-twinkle-dot" style="top:12%; left:45%; --tw-delay:2.4s;"></span>
+            <span class="rig-twinkle-dot" style="top:82%; left:55%; --tw-delay:3s;"></span>
+            <span class="rig-twinkle-dot" style="top:50%; left:32%; --tw-delay:0.9s;"></span>
+            <span class="rig-twinkle-dot" style="top:48%; left:70%; --tw-delay:1.5s;"></span>
+        </div>
+
         <div class="menu-card">
-            <h2>Spine Model Loader</h2>
-
-            <div class="file-input-group">
-                <label for="json-file">1. Select Spine JSON File (.json):</label>
-                <input type="file" id="json-file" accept=".json">
+            <div class="menu-card-head">
+                <span class="menu-eyebrow">Spine Exporter</span>
+                <h2>Load your rig</h2>
+                <p class="menu-sub">Skeleton, atlas and texture — in that order.</p>
             </div>
 
-            <div class="file-input-group">
-                <label for="atlas-file">2. Select Atlas File (.atlas / .txt):</label>
-                <input type="file" id="atlas-file" accept=".atlas,.txt">
-            </div>
+            <label class="file-step" for="json-file">
+                <input type="file" id="json-file" accept=".json" class="file-step-input">
+                <span class="file-step-num">01</span>
+                <span class="file-step-body">
+                    <span class="file-step-title">Skeleton JSON</span>
+                    <span class="file-step-name" id="json-file-name">No file selected</span>
+                </span>
+                <span class="file-step-action">Browse</span>
+            </label>
 
-            <div class="file-input-group">
-                <label for="image-files">3. Select PNG Texture Image(s) (.png):</label>
-                <input type="file" id="image-files" accept=".png" multiple>
-            </div>
+            <label class="file-step" for="atlas-file">
+                <input type="file" id="atlas-file" accept=".atlas,.txt" class="file-step-input">
+                <span class="file-step-num">02</span>
+                <span class="file-step-body">
+                    <span class="file-step-title">Atlas file</span>
+                    <span class="file-step-name" id="atlas-file-name">No file selected</span>
+                </span>
+                <span class="file-step-action">Browse</span>
+            </label>
+
+            <label class="file-step" for="image-files">
+                <input type="file" id="image-files" accept=".png" multiple class="file-step-input">
+                <span class="file-step-num">03</span>
+                <span class="file-step-body">
+                    <span class="file-step-title">PNG texture(s)</span>
+                    <span class="file-step-name" id="image-files-name">No file selected</span>
+                </span>
+                <span class="file-step-action">Browse</span>
+            </label>
 
             <button class="btn-load" onclick="processAndLoadSpine()">▶ Load Model</button>
         </div>
@@ -56,40 +211,43 @@
         <!-- Draggable Control Box -->
         <div id="control-box">
             <div class="drag-header" id="drag-header">
-                ⚙️ Setting <span>Press 'H' to Hide</span>
+                <span class="drag-header-title">⚙ Settings</span>
+                <span class="drag-header-hint">Press 'H' to hide</span>
             </div>
 
-            <!-- Background Color Picker -->
-            <div class="control-group">
-                <label for="bg-color">Background Color:</label>
-                <div class="row-group">
-                    <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
-                    <button class="btn-reset" onclick="resetBgColor()">Reset (Transparent)</button>
+            <div class="cb-section">
+                <span class="cb-section-label">Appearance</span>
+
+                <div class="cb-field">
+                    <label for="bg-color" class="cb-field-label">Background color</label>
+                    <div class="row-group">
+                        <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
+                        <button class="btn-reset" onclick="resetBgColor()">Transparent</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Bitrate Setting -->
-            <div class="control-group">
-                <label for="bitrate-input">Target Bitrate (Mbps):</label>
-                <div class="row-group">
-                    <input type="number" id="bitrate-input" value="40" min="1" max="200" step="1">
-                    <button class="btn-reset" onclick="resetBitrate()">Reset (40M)</button>
-                </div>
-            </div>
+            <div class="cb-section">
+                <span class="cb-section-label">Export</span>
 
-            <!-- Native Resolution Toggle -->
-            <div class="control-group">
-                <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
-                    <input type="checkbox" id="native-res-checkbox" style="width:auto; padding:0;">
-                    <span>Record at Native Res (<span id="native-res-label">-</span>)</span>
+                <div class="cb-field">
+                    <label for="bitrate-input" class="cb-field-label">Target bitrate (Mbps)</label>
+                    <div class="row-group">
+                        <input type="number" id="bitrate-input" value="40" min="1" max="200" step="1">
+                        <button class="btn-reset" onclick="resetBitrate()">40M</button>
+                    </div>
+                </div>
+
+                <label class="cb-toggle" for="native-res-checkbox">
+                    <input type="checkbox" id="native-res-checkbox">
+                    <span class="cb-toggle-track"><span class="cb-toggle-thumb"></span></span>
+                    <span class="cb-toggle-label">Native resolution <span class="cb-toggle-sub" id="native-res-label">–</span></span>
                 </label>
-            </div>
 
-            <!-- Native Duration Toggle -->
-            <div class="control-group">
-                <label class="row-group" style="align-items:center; gap:8px; cursor:pointer;">
-                    <input type="checkbox" id="native-duration-checkbox" style="width:auto; padding:0;">
-                    <span>Record at Native Duration (Offline Export)</span>
+                <label class="cb-toggle" for="native-duration-checkbox">
+                    <input type="checkbox" id="native-duration-checkbox">
+                    <span class="cb-toggle-track"><span class="cb-toggle-thumb"></span></span>
+                    <span class="cb-toggle-label">Native duration <span class="cb-toggle-sub">offline export</span></span>
                 </label>
             </div>
 
@@ -102,15 +260,13 @@
                 Waiting for animation payload...
             </div>
 
-            <!-- Pan & Zoom Hint + Reset -->
-            <div class="control-group">
-                <div class="pan-zoom-hint">
-                    🖱️ Right-click + drag to pan · Scroll to zoom
-                </div>
-                <button class="btn-reset" style="width:100%;" onclick="resetView()">🎯 Reset View</button>
+            <div class="cb-section">
+                <span class="cb-section-label">Viewport</span>
+                <div class="pan-zoom-hint">🖱 Right-click + drag to pan · Scroll to zoom</div>
+                <button class="btn-reset btn-reset--wide" onclick="resetView()">🎯 Reset View</button>
             </div>
 
-            <button class="btn-reset" style="width:100%; margin-top:10px;" onclick="openMainMenu()">📁 Load New Model</button>
+            <button class="btn-reset btn-reset--wide" onclick="openMainMenu()">📁 Load New Model</button>
         </div>
 
         <!-- Spine Player Canvas Container -->
