@@ -46,14 +46,6 @@ html, body {
 	padding: 20px;
 }
 
-/* Signature: bone-rig background — kite-shaped bones + joints, parented in
-   nested SVG groups so a root segment's sway cascades to its children,
-   mimicking real skeletal forward-kinematics motion.
-
-   Setiap chain ialah SVG KECIL berasingan di-pin terus ke penjuru/tepi
-   SEBENAR viewport guna position:fixed — automatik betul kedudukan pada
-   nisbah skrin apa pun (16:9, 21:9, 9:16...), tiada isu crop/slice/meet
-   dari cuba paksa satu kanvas kongsi muat semua nisbah. */
 .rig-corner {
 	position: fixed;
 	z-index: -1;
@@ -91,9 +83,6 @@ html, body {
 .rig-bone--faint { opacity: 0.1; }
 .rig-joint--faint { opacity: 0.16; }
 
-/* Titik joint berkelip — div biasa + peratus posisi (top/left %), jadi
-   automatik betul kedudukan pada nisbah skrin apa pun, tiada isu SVG
-   viewBox/aspect-ratio langsung. */
 .rig-twinkles {
 	position: fixed;
 	inset: 0;
@@ -111,10 +100,6 @@ html, body {
 	transform: translate(-50%, -50%);
 }
 
-/* Baseline rotation & sway amplitude/speed dikawal guna CSS custom
-   properties (--base-rot / --amp / --dur) yang diset terus pada setiap
-   instance dalam markup — satu sistem generic dikongsi semua chain, tak
-   perlu class berasingan untuk setiap sudut/segmen. */
 .rig-anim {
 	transform-origin: 0 0;
 	transform: rotate(var(--base-rot, 0deg));

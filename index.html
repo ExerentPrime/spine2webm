@@ -24,16 +24,6 @@
     <!-- PAGE 1: LOADER PAGE -->
     <div id="view-loader" class="page-view active">
 
-        <!-- Signature: animated bone-rig chains (Spine's own bone visual
-             vocabulary — kite-shaped bones + joints), parented in nested
-             SVG groups so rotating a root segment cascades to its children,
-             mimicking real skeletal forward-kinematics sway.
-
-             Setiap chain ialah SVG KECIL berasingan, di-pin terus ke
-             penjuru/tepi SEBENAR viewport guna CSS position:fixed
-             (top/left/right/bottom) — jadi ia automatik ikut penjuru
-             sebenar tak kira nisbah skrin (16:9, 21:9, 9:16, dll), tiada
-             isu crop/slice/meet dari satu kanvas kongsi. -->
         <svg class="rig-corner rig-corner--tl" viewBox="0 0 300 300" aria-hidden="true">
             <defs><linearGradient id="boneGrad" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#22d3ee"/>
@@ -151,8 +141,6 @@
             </g>
         </svg>
 
-        <!-- Titik joint berkelip merata skrin — div biasa + peratus posisi,
-             jadi automatik betul kedudukan pada NISBAH SKRIN APA PUN. -->
         <div class="rig-twinkles" aria-hidden="true">
             <span class="rig-twinkle-dot" style="top:22%; left:25%; --tw-delay:0s;"></span>
             <span class="rig-twinkle-dot" style="top:26%; left:78%; --tw-delay:0.6s;"></span>
