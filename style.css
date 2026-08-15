@@ -197,6 +197,16 @@ html, body {
 	background: rgba(34, 211, 238, 0.06);
 }
 
+.file-step.is-invalid {
+	border-color: #ff6b6b;
+	background: rgba(255, 107, 107, 0.08);
+}
+
+.file-step.is-warning {
+	border-color: #ffb703;
+	background: rgba(255, 183, 3, 0.08);
+}
+
 .file-step-input {
 	position: absolute;
 	inset: 0;
@@ -243,6 +253,28 @@ html, body {
 	white-space: nowrap;
 }
 
+.file-step-status {
+	font-family: monospace;
+	font-size: 10px;
+	line-height: 1.4;
+	display: none;
+}
+
+.file-step-status.is-error {
+	display: block;
+	color: #ff6b6b;
+}
+
+.file-step-status.is-warning {
+	display: block;
+	color: #ffb703;
+}
+
+.file-step-status.is-ok {
+	display: block;
+	color: var(--accent-cyan);
+}
+
 .file-step-action {
 	font-family: var(--font-body);
 	font-size: 11px;
@@ -268,6 +300,12 @@ html, body {
 
 .btn-load:hover { filter: brightness(1.1); }
 .btn-load:active { transform: scale(0.98); }
+.btn-load:disabled {
+	background: rgba(168, 85, 247, 0.15);
+	color: var(--text-muted);
+	cursor: not-allowed;
+	filter: none;
+}
 
 /* --- PAGE 2: STUDIO PAGE --- */
 #view-studio {
@@ -387,7 +425,7 @@ html, body {
 .row-group {
 	display: flex;
 	gap: 6px;
-	align-items: center;
+	align-items: stretch;
 }
 
 label {
@@ -404,6 +442,7 @@ input[type="color"], input[type="number"], button {
 	font-family: var(--font-body);
 	font-size: 13px;
 	outline: none;
+	box-sizing: border-box;
 }
 
 .row-group input[type="number"] { flex: 1; width: auto; }
@@ -414,12 +453,40 @@ input[type="color"], input[type="number"], button {
 	text-align: center;
 }
 
-input[type="color"] {
+.bg-swatch-wrap {
+	position: relative;
 	flex: 1;
-	width: auto;
-	height: 38px;
-	padding: 2px;
+}
+
+.bg-swatch-wrap input[type="color"] {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
 	cursor: pointer;
+	padding: 0;
+	border: none;
+}
+
+.bg-swatch {
+	position: absolute;
+	inset: 0;
+	border-radius: 8px;
+	border: 1px solid var(--line);
+	pointer-events: none;
+	background-color: #000000;
+}
+
+.bg-swatch.is-transparent {
+	background-color: #241d38;
+	background-image:
+		linear-gradient(45deg, #4a3f6b 25%, transparent 25%),
+		linear-gradient(-45deg, #4a3f6b 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, #4a3f6b 75%),
+		linear-gradient(-45deg, transparent 75%, #4a3f6b 75%);
+	background-size: 16px 16px;
+	background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
 }
 
 button {

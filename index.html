@@ -165,6 +165,7 @@
                 <span class="file-step-body">
                     <span class="file-step-title">Skeleton JSON</span>
                     <span class="file-step-name" id="json-file-name">No file selected</span>
+                    <span class="file-step-status" id="json-file-status"></span>
                 </span>
                 <span class="file-step-action">Browse</span>
             </label>
@@ -175,6 +176,7 @@
                 <span class="file-step-body">
                     <span class="file-step-title">Atlas file</span>
                     <span class="file-step-name" id="atlas-file-name">No file selected</span>
+                    <span class="file-step-status" id="atlas-file-status"></span>
                 </span>
                 <span class="file-step-action">Browse</span>
             </label>
@@ -185,6 +187,7 @@
                 <span class="file-step-body">
                     <span class="file-step-title">PNG texture(s)</span>
                     <span class="file-step-name" id="image-files-name">No file selected</span>
+                    <span class="file-step-status" id="image-files-status"></span>
                 </span>
                 <span class="file-step-action">Browse</span>
             </label>
@@ -209,7 +212,10 @@
                 <div class="cb-field">
                     <label for="bg-color" class="cb-field-label">Background color</label>
                     <div class="row-group">
-                        <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
+                        <div class="bg-swatch-wrap">
+                            <input type="color" id="bg-color" value="#000000" oninput="updateSpineBg(this.value)">
+                            <div class="bg-swatch is-transparent" id="bg-swatch"></div>
+                        </div>
                         <button class="btn-reset" onclick="resetBgColor()">Transparent</button>
                     </div>
                 </div>
