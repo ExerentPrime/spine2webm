@@ -378,6 +378,12 @@ html, body {
 	color: var(--text-muted);
 }
 
+.cb-field-value {
+	font-family: monospace;
+	color: var(--accent-cyan);
+	font-size: 11px;
+}
+
 .row-group {
 	display: flex;
 	gap: 6px;
@@ -401,14 +407,19 @@ input[type="color"], input[type="number"], button {
 }
 
 .row-group input[type="number"] { flex: 1; width: auto; }
-.row-group .btn-reset { flex: 1; }
+
+.row-group .btn-reset {
+	flex: 0 0 96px;
+	width: 96px;
+	text-align: center;
+}
 
 input[type="color"] {
-	width: 52px;
+	flex: 1;
+	width: auto;
 	height: 38px;
 	padding: 2px;
 	cursor: pointer;
-	flex-shrink: 0;
 }
 
 button {
@@ -435,6 +446,10 @@ button.btn-reset:hover {
 
 .btn-reset--wide {
 	width: 100%;
+}
+
+#control-box > .btn-reset--wide {
+	margin-top: 14px;
 }
 
 /* --- Custom toggle switch --- */
@@ -544,7 +559,14 @@ button.rec-btn.recording {
 	font-weight: bold;
 }
 
+.anim-details + .anim-details {
+	border-top: none;
+	margin-top: 0;
+	padding-top: 8px;
+}
+
 .pan-zoom-hint {
+	padding-top: 10px;
 	font-size: 11px;
 	color: var(--text-muted);
 	text-align: center;

@@ -226,6 +226,14 @@
                     </div>
                 </div>
 
+                <div class="cb-field">
+                    <label for="fps-input" class="cb-field-label">Framerate (fps)</label>
+                    <div class="row-group">
+                        <input type="number" id="fps-input" value="60" min="1" max="120" step="1">
+                        <button class="btn-reset" onclick="resetFps()">60fps</button>
+                    </div>
+                </div>
+
                 <label class="cb-toggle" for="native-res-checkbox">
                     <input type="checkbox" id="native-res-checkbox">
                     <span class="cb-toggle-track"><span class="cb-toggle-thumb"></span></span>
@@ -248,8 +256,13 @@
                 Waiting for animation payload...
             </div>
 
+            <!-- Viewport Details -->
+            <div id="viewport-details" class="anim-details">
+                <span class="highlight">📺 Viewport Details:</span><br>
+                📐 <b>Current Res:</b> <span id="viewport-res-label">–</span>
+            </div>
+
             <div class="cb-section">
-                <span class="cb-section-label">Viewport</span>
                 <div class="pan-zoom-hint">🖱 Right-click + drag to pan · Scroll to zoom</div>
                 <button class="btn-reset btn-reset--wide" onclick="resetView()">🎯 Reset View</button>
             </div>
