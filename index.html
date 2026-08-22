@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spine WebM Exporter</title>
+    <title>Spine Exporter</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <script src="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/iife/spine-player.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@esotericsoftware/spine-player@4.2.43/dist/spine-player.css">
 
     <script src="https://unpkg.com/webm-muxer@5.1.2/build/webm-muxer.js"></script>
 
@@ -227,7 +224,7 @@
                 <div class="cb-field">
                     <label for="bitrate-input" class="cb-field-label">Target bitrate (Mbps)</label>
                     <div class="row-group">
-                        <input type="number" id="bitrate-input" value="40" min="1" max="200" step="1">
+                        <input type="number" id="bitrate-input" value="40" min="3" max="100" step="1">
                         <button class="btn-reset" onclick="resetBitrate()">40M</button>
                     </div>
                 </div>
@@ -249,8 +246,16 @@
                 <label class="cb-toggle" for="native-duration-checkbox">
                     <input type="checkbox" id="native-duration-checkbox">
                     <span class="cb-toggle-track"><span class="cb-toggle-thumb"></span></span>
-                    <span class="cb-toggle-label">Native duration <span class="cb-toggle-sub">offline export</span></span>
+                    <span class="cb-toggle-label">Native duration</span>
                 </label>
+
+                <div class="cb-field">
+                    <span class="cb-field-label">Output Format</span>
+                    <div class="segmented-control" id="output-format-control">
+                        <button type="button" class="segmented-option is-active" data-format="webm" onclick="setOutputFormat('webm')">WebM</button>
+                        <button type="button" class="segmented-option" data-format="png" onclick="setOutputFormat('png')">PNG Sequence</button>
+                    </div>
+                </div>
             </div>
 
             <!-- Toggle Record Button & Status -->

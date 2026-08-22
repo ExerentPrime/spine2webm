@@ -197,6 +197,7 @@ html, body {
 	background: rgba(34, 211, 238, 0.06);
 }
 
+/* Validation states */
 .file-step.is-invalid {
 	border-color: #ff6b6b;
 	background: rgba(255, 107, 107, 0.08);
@@ -273,6 +274,11 @@ html, body {
 .file-step-status.is-ok {
 	display: block;
 	color: var(--accent-cyan);
+}
+
+.file-step-status.is-info {
+	display: block;
+	color: var(--text-muted);
 }
 
 .file-step-action {
@@ -528,6 +534,15 @@ button.btn-reset:hover {
 	cursor: pointer;
 }
 
+.cb-toggle.is-disabled {
+	cursor: not-allowed;
+	opacity: 0.45;
+}
+
+.cb-toggle.is-disabled .cb-toggle-track {
+	cursor: not-allowed;
+}
+
 .cb-toggle input {
 	position: absolute;
 	opacity: 0;
@@ -576,6 +591,46 @@ button.btn-reset:hover {
 	color: var(--text-muted);
 	font-size: 11px;
 	margin-left: 4px;
+}
+
+/* --- Segmented control (Output Format) --- */
+.segmented-control {
+	display: flex;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.segmented-option {
+	flex: 1;
+	padding: 8px;
+	background: rgba(8, 5, 15, 0.6);
+	border: none;
+	border-radius: 0;
+	color: var(--text-muted);
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.segmented-option:not(:last-child) {
+	border-right: 1px solid var(--line);
+}
+
+.segmented-option.is-active {
+	background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+	color: #0a0512;
+}
+
+.segmented-option:disabled,
+.segmented-option.is-unsupported {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.segmented-option:disabled.is-active,
+.segmented-option.is-unsupported.is-active {
+	background: rgba(168, 85, 247, 0.15);
+	color: var(--text-muted);
 }
 
 button.rec-btn {
